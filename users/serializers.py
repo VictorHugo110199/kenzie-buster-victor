@@ -34,6 +34,13 @@ class UserSerializer(serializers.Serializer):
             return User.objects.create_user(**validated_data, is_superuser=True)
         return User.objects.create_user(**validated_data)
     
+    def update(self, instance, validated_data):
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+        instance.set_password(instance.password)
+        instance.save()
+        return instance
+    
     
 
 

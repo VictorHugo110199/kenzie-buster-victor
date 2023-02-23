@@ -7,9 +7,9 @@ from django.shortcuts import get_object_or_404
 from .permissions import MyCustomPermission
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from users.models import User
+from kenzie_buster.pagination import CustomPageNumberPagination
 
-
-class MovieViews (APIView):
+class MovieViews (APIView, CustomPageNumberPagination):
 
     authentication_classes = [JWTAuthentication]
     permission_classes = [MyCustomPermission]
@@ -17,8 +17,9 @@ class MovieViews (APIView):
     
     def get (self, request):
         all_moviels = Movie.objects.all()
-        serializer = MoviesSerializer(all_moviels, many=True)
-        return Response(serializer.data)
+        result_page = self.paginate_queryset(all_moviels, request, view=self)
+        serializer = MoviesSerializer(result_page, many=True)
+        return self.get_paginated_response(serializer.data)
 
     def post (self, request):
         serializer = MoviesSerializer(data=request.data)
