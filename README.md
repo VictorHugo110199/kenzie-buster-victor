@@ -1,5 +1,17 @@
 # M5 - Kenzie Buster
 
+## 1. Visão Geral
+
+Visão geral do projeto, um pouco das tecnologias usadas.
+
+- Python
+- Django
+- Django-rest-framework
+- JWT
+- Paginação com APIView
+- 
+</br>
+
 ## Instalação dos pacotes de teste
 
 - Verifique se os pacotes `pytest` e/ou `pytest-testdox` estão instalados globalmente em seu sistema:
